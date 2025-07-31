@@ -1,0 +1,23 @@
+{
+  "name": "national-girlfriend-day-website",
+  "version": "1.0.0",
+  "description": "A romantic full-stack website for National Girlfriend Day with personalized login experiences",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "cd backend && npm install && npm start",
+    "install-backend": "cd backend && npm install",
+    "dev": "cd backend && npm start",
+    "build": "cd backend && npm install",
+    "vercel-build": "cd backend && npm install"
+  },
+  "keywords": ["romance", "girlfriend", "love", "authentication", "couples", "national-girlfriend-day"],
+  "author": "Created with love for your special someone",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "Local romantic website"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

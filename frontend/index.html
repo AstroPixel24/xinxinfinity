@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy National Girlfriend Day</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Login Page -->
+        <div id="loginPage" class="page active">
+            <div class="login-container">
+                <div class="heart-animation">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <h1 class="main-title">Happy National Girlfriend Day!</h1>
+                <p class="subtitle">A special place for our love story</p>
+                
+                <form class="login-form" id="loginForm">
+                    <div class="input-group">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="username" placeholder="Username" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="login-btn">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Enter Our Love Space
+                    </button>
+                </form>
+                
+                <div class="hearts-bg">
+                    <div class="heart"></div>
+                    <div class="heart"></div>
+                    <div class="heart"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Page -->
+        <div id="dashboardPage" class="page">
+            <nav class="navbar">
+                <div class="nav-brand">
+                    <i class="fas fa-heart"></i>
+                    <span>Our Love Story</span>
+                </div>
+                <div class="nav-user">
+                    <span id="welcomeUser">Welcome!</span>
+                    <button id="logoutBtn" class="logout-btn">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </nav>
+
+            <main class="dashboard">
+                <div class="hero-section">
+                    <h1 id="personalizedTitle">Happy National Girlfriend Day!</h1>
+                    <p id="personalizedMessage">Today we celebrate our amazing love story!</p>
+                </div>
+
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <h3>Messages</h3>
+                        <p>Send sweet messages to each other</p>
+                        <button class="feature-btn" onclick="showMessages()">Open Messages</button>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h3>Love Notes</h3>
+                        <p>Sweet messages from the heart</p>
+                        <button class="feature-btn" onclick="showLoveNotes()">Read Notes</button>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-images"></i>
+                        </div>
+                        <h3>Memory Gallery</h3>
+                        <p>Our beautiful moments together</p>
+                        <button class="feature-btn" onclick="showGallery()">View Gallery</button>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-calendar-heart"></i>
+                        </div>
+                        <h3>Special Dates</h3>
+                        <p>Important milestones in our relationship</p>
+                        <button class="feature-btn" onclick="showDates()">View Dates</button>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-gift"></i>
+                        </div>
+                        <h3>Surprise Box</h3>
+                        <p>Special surprises just for you</p>
+                        <button class="feature-btn" onclick="showSurprises()">Open Box</button>
+                    </div>
+                </div>
+
+                <!-- Content Sections -->
+                <div id="contentSection" class="content-section hidden">
+                    <!-- Dynamic content will be loaded here -->
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

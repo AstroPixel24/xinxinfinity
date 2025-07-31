@@ -1,0 +1,14 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Start National Girlfriend Day Website",
+			"type": "shell",
+			"command": "cd backend && npm install && npm start",
+			"group": "build",
+			"isBackground": true,
+			"problemMatcher": [],
+			"args": []
+		}
+	]
+}

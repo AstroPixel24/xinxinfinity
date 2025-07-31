@@ -1,0 +1,22 @@
+{
+  "name": "national-girlfriend-day-website",
+  "version": "1.0.0",
+  "description": "A romantic website for National Girlfriend Day with authentication for couples",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "build": "echo 'Build complete'"
+  },
+  "keywords": ["romance", "girlfriend", "love", "authentication", "couples"],
+  "author": "Created with love",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "body-parser": "^1.20.2"
+  }
+}
