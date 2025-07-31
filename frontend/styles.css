@@ -17,10 +17,15 @@ body {
 .page {
     display: none;
     min-height: 100vh;
+    transition: all 0.3s ease;
 }
 
 .page.active {
     display: block;
+}
+
+#dashboardPage {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 50%, #dee2e6 100%);
 }
 
 /* Login Page Styles */
@@ -186,6 +191,11 @@ body {
     justify-content: space-between;
     align-items: center;
     box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
 }
 
 .nav-brand {
@@ -201,6 +211,21 @@ body {
     display: flex;
     align-items: center;
     gap: 1rem;
+    font-weight: 500;
+    color: #2c3e50;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6c63ff 0%, #5a52d5 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+    margin-right: 0.5rem;
 }
 
 .logout-btn {
@@ -221,30 +246,33 @@ body {
     padding: 2rem;
     max-width: 1200px;
     margin: 0 auto;
+    margin-top: 80px; /* Account for fixed navbar */
 }
 
 .hero-section {
     text-align: center;
     margin-bottom: 3rem;
-    padding: 3rem 0;
-    background: rgba(255, 255, 255, 0.1);
+    padding: 2rem 0;
+    background: rgba(255, 255, 255, 0.6);
     backdrop-filter: blur(10px);
     border-radius: 20px;
-    color: white;
+    color: #2c3e50;
+    border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .hero-section h1 {
     font-family: 'Dancing Script', cursive;
-    font-size: 3.5rem;
+    font-size: 3rem;
     margin-bottom: 1rem;
     font-weight: 700;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    color: #6c63ff;
 }
 
 .hero-section p {
-    font-size: 1.2rem;
-    opacity: 0.9;
-    font-weight: 300;
+    font-size: 1.1rem;
+    opacity: 0.8;
+    font-weight: 400;
+    line-height: 1.6;
 }
 
 .features-grid {
@@ -545,6 +573,21 @@ body {
 @keyframes gentle-bounce {
     0%, 100% { transform: scale(1); }
     50% { transform: scale(1.1); }
+}
+
+@keyframes successPop {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.5);
+    }
+    50% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.1);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
 }
 
 .message-header {

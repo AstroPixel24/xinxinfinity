@@ -64,21 +64,34 @@ let selectedGesture = null;
 
 let currentUser = null;
 
-// DOM Elements
-const loginPage = document.getElementById('loginPage');
-const dashboardPage = document.getElementById('dashboardPage');
-const loginForm = document.getElementById('loginForm');
-const usernameInput = document.getElementById('username');
-const passwordInput = document.getElementById('password');
-const welcomeUser = document.getElementById('welcomeUser');
-const personalizedTitle = document.getElementById('personalizedTitle');
-const personalizedMessage = document.getElementById('personalizedMessage');
-const logoutBtn = document.getElementById('logoutBtn');
-const contentSection = document.getElementById('contentSection');
+// DOM Elements (will be set after DOM loads)
+let loginPage, dashboardPage, loginForm, usernameInput, passwordInput;
+let welcomeUser, userAvatar, personalizedTitle, personalizedMessage, logoutBtn, contentSection;
 
 // Event Listeners
-loginForm.addEventListener('submit', handleLogin);
-logoutBtn.addEventListener('click', handleLogout);
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize DOM elements
+    loginPage = document.getElementById('loginPage');
+    dashboardPage = document.getElementById('dashboardPage');
+    loginForm = document.getElementById('loginForm');
+    usernameInput = document.getElementById('username');
+    passwordInput = document.getElementById('password');
+    welcomeUser = document.getElementById('welcomeUser');
+    userAvatar = document.getElementById('userAvatar');
+    personalizedTitle = document.getElementById('personalizedTitle');
+    personalizedMessage = document.getElementById('personalizedMessage');
+    logoutBtn = document.getElementById('logoutBtn');
+    contentSection = document.getElementById('contentSection');
+    
+    // Add event listeners
+    if (loginForm) loginForm.addEventListener('submit', handleLogin);
+    if (logoutBtn) logoutBtn.addEventListener('click', handleLogout);
+    
+    // Initialize gesture selection to normal message
+    selectedGesture = null;
+    
+    console.log('National Girlfriend Day website loaded with love!');
+});
 
 // Login function
 function handleLogin(e) {
@@ -87,55 +100,112 @@ function handleLogin(e) {
     const username = usernameInput.value.trim().toLowerCase();
     const password = passwordInput.value.trim();
     
+    console.log('Login attempt:', username, password); // Debug log
+    console.log('Available users:', Object.keys(users)); // Debug log
+    
     if (users[username] && users[username].password === password) {
         currentUser = users[username];
-        showDashboard();
+        console.log('Login successful for:', currentUser.name); // Debug log
         
-        // Add login success animation
-        loginPage.style.transform = 'scale(0.95)';
-        loginPage.style.opacity = '0';
+        // Show success message
+        showLoginSuccess();
         
+        // Clear form
+        usernameInput.value = '';
+        passwordInput.value = '';
+        
+        // Transition to dashboard after success message
         setTimeout(() => {
-            loginPage.classList.remove('active');
-            dashboardPage.classList.add('active');
-            
-            // Reset login page styles
-            setTimeout(() => {
-                loginPage.style.transform = '';
-                loginPage.style.opacity = '';
-            }, 500);
-        }, 300);
+            console.log('About to call showDashboard'); // Debug log
+            console.log('loginPage element:', loginPage); // Debug log
+            console.log('dashboardPage element:', dashboardPage); // Debug log
+            showDashboard();
+            console.log('showDashboard called'); // Debug log
+        }, 1500);
+        
     } else {
+        console.log('Login failed - invalid credentials'); // Debug log
         // Show error animation
-        loginForm.style.animation = 'shake 0.5s ease-in-out';
-        loginForm.style.borderColor = '#e74c3c';
-        
-        // Create error message
-        let errorMsg = document.querySelector('.error-message');
-        if (!errorMsg) {
-            errorMsg = document.createElement('div');
-            errorMsg.className = 'error-message';
-            errorMsg.style.cssText = `
-                color: #e74c3c;
-                text-align: center;
-                margin-top: 1rem;
-                font-size: 0.9rem;
-                opacity: 0;
-                transition: opacity 0.3s ease;
-            `;
-            loginForm.appendChild(errorMsg);
-        }
-        
-        errorMsg.textContent = 'Oops! Check your username and password';
-        errorMsg.style.opacity = '1';
-        
-        // Clear error after 3 seconds
-        setTimeout(() => {
-            loginForm.style.animation = '';
-            loginForm.style.borderColor = '';
-            errorMsg.style.opacity = '0';
-        }, 3000);
+        showLoginError();
     }
+}
+
+// Show login success message
+function showLoginSuccess() {
+    // Create success message
+    let successMsg = document.querySelector('.success-message');
+    if (!successMsg) {
+        successMsg = document.createElement('div');
+        successMsg.className = 'success-message';
+        successMsg.style.cssText = `
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #6c63ff 0%, #5a52d5 100%);
+            color: white;
+            padding: 2rem 3rem;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            box-shadow: 0 20px 40px rgba(108, 99, 255, 0.3);
+            z-index: 1000;
+            opacity: 0;
+            animation: successPop 1.5s ease-out forwards;
+        `;
+        document.body.appendChild(successMsg);
+    }
+    
+    successMsg.innerHTML = `
+        <i class="fas fa-check-circle" style="font-size: 2rem; margin-bottom: 1rem; display: block;"></i>
+        Login Successful!<br>
+        <span style="font-size: 1rem; opacity: 0.9;">Welcome to your love space</span>
+    `;
+    
+    // Remove success message after animation
+    setTimeout(() => {
+        if (successMsg) {
+            successMsg.remove();
+        }
+    }, 2000);
+}
+
+// Show login error
+function showLoginError() {
+    loginForm.style.animation = 'shake 0.5s ease-in-out';
+    
+    // Create error message
+    let errorMsg = document.querySelector('.error-message');
+    if (!errorMsg) {
+        errorMsg = document.createElement('div');
+        errorMsg.className = 'error-message';
+        errorMsg.style.cssText = `
+            color: #e74c3c;
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            background: rgba(231, 76, 60, 0.1);
+            padding: 0.8rem;
+            border-radius: 8px;
+            border: 1px solid rgba(231, 76, 60, 0.3);
+        `;
+        loginForm.appendChild(errorMsg);
+    }
+    
+    errorMsg.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Incorrect username or password';
+    errorMsg.style.opacity = '1';
+    
+    // Clear error after 3 seconds
+    setTimeout(() => {
+        loginForm.style.animation = '';
+        if (errorMsg) {
+            errorMsg.style.opacity = '0';
+            setTimeout(() => errorMsg.remove(), 300);
+        }
+    }, 3000);
     
     // Clear form
     usernameInput.value = '';
@@ -144,28 +214,72 @@ function handleLogin(e) {
 
 // Show dashboard with personalized content
 function showDashboard() {
-    welcomeUser.textContent = `Welcome, ${currentUser.name}!`;
-    personalizedTitle.textContent = currentUser.personalizedTitle;
-    personalizedMessage.textContent = currentUser.personalizedMessage;
+    console.log('showDashboard called'); // Debug log
+    console.log('loginPage classes before:', loginPage.classList.toString());
+    console.log('dashboardPage classes before:', dashboardPage.classList.toString());
+    
+    if (!loginPage || !dashboardPage) {
+        console.error('Page elements not found:', { loginPage, dashboardPage });
+        return;
+    }
+    
+    const currentUsername = currentUser === users.boyfriend ? 'boyfriend' : 'girlfriend';
+    const userInitial = currentUsername.charAt(0).toUpperCase();
+    
+    // Update user info in navbar
+    if (welcomeUser) welcomeUser.textContent = `${currentUser.name}`;
+    if (userAvatar) userAvatar.textContent = userInitial;
+    
+    // Update hero section
+    if (personalizedTitle) personalizedTitle.textContent = currentUser.personalizedTitle;
+    if (personalizedMessage) personalizedMessage.textContent = currentUser.personalizedMessage;
     
     // Hide content section initially
-    contentSection.classList.add('hidden');
+    if (contentSection) contentSection.classList.add('hidden');
+    
+    console.log('Switching from login to dashboard'); // Debug log
+    
+    // Force immediate switch - remove active from login, add to dashboard
+    loginPage.classList.remove('active');
+    dashboardPage.classList.add('active');
+    
+    console.log('loginPage classes after:', loginPage.classList.toString());
+    console.log('dashboardPage classes after:', dashboardPage.classList.toString());
+    console.log('Dashboard should now be visible'); // Debug log
+    
+    // Load messages after dashboard is shown
+    setTimeout(() => {
+        loadMessages();
+    }, 100);
 }
 
 // Logout function
 function handleLogout() {
     currentUser = null;
-    dashboardPage.classList.remove('active');
-    loginPage.classList.add('active');
-    contentSection.classList.add('hidden');
     
-    // Add logout animation
-    dashboardPage.style.transform = 'translateY(-20px)';
+    // Smooth transition from dashboard to login
     dashboardPage.style.opacity = '0';
+    dashboardPage.style.transform = 'translateY(-20px)';
     
     setTimeout(() => {
-        dashboardPage.style.transform = '';
-        dashboardPage.style.opacity = '';
+        dashboardPage.classList.remove('active');
+        loginPage.classList.add('active');
+        contentSection.classList.add('hidden');
+        
+        // Animate login page entrance
+        loginPage.style.opacity = '0';
+        loginPage.style.transform = 'scale(0.9)';
+        
+        setTimeout(() => {
+            loginPage.style.opacity = '1';
+            loginPage.style.transform = 'scale(1)';
+        }, 100);
+        
+        // Reset dashboard styles
+        setTimeout(() => {
+            dashboardPage.style.opacity = '';
+            dashboardPage.style.transform = '';
+        }, 500);
     }, 300);
 }
 
@@ -515,12 +629,3 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
-
-// Add some interactive elements
-document.addEventListener('DOMContentLoaded', function() {
-    // Subtle click effect (removed excessive hearts)
-    console.log('National Girlfriend Day website loaded with love!');
-    
-    // Initialize gesture selection to normal message
-    selectedGesture = null;
-});
