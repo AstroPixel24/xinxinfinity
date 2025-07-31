@@ -59,7 +59,7 @@ const specialDates = [
 ];
 
 // Messages storage (in real app, this would be in a database)
-let messages = JSON.parse(localStorage.getItem('coupleMessages') || '[]');
+let messages = [];
 let selectedGesture = null;
 
 let currentUser = null;
@@ -190,8 +190,19 @@ function showLoveNotes() {
 }
 
 // Show messages
-function showMessages() {
+async function showMessages() {
     const currentUsername = currentUser === users.boyfriend ? 'boyfriend' : 'girlfriend';
+    
+    // Fetch messages from server
+    try {
+        const response = await fetch('/api/messages');
+        const data = await response.json();
+        if (data.success) {
+            messages = data.messages;
+        }
+    } catch (error) {
+        console.error('Error fetching messages:', error);
+    }
     
     const content = `
         <div class="messages-section">
@@ -227,6 +238,12 @@ function showMessages() {
                 ${renderMessages(currentUsername)}
             </div>
             
+            <div style="text-align: center; margin-top: 1rem;">
+                <button class="feature-btn" onclick="refreshMessages()" style="background: rgba(108, 99, 255, 0.1); color: #6c63ff; margin-right: 1rem;">
+                    <i class="fas fa-sync-alt"></i> Refresh Messages
+                </button>
+            </div>
+            
             <div style="text-align: center; margin-top: 2rem;">
                 <button class="feature-btn" onclick="hideContent()">
                     <i class="fas fa-arrow-left"></i> Back to Main
@@ -254,8 +271,29 @@ function selectGesture(gesture) {
     }
 }
 
+// Refresh messages function
+async function refreshMessages() {
+    const currentUsername = currentUser === users.boyfriend ? 'boyfriend' : 'girlfriend';
+    
+    try {
+        const response = await fetch('/api/messages');
+        const data = await response.json();
+        if (data.success) {
+            messages = data.messages;
+            
+            // Re-render messages
+            const messagesList = document.getElementById('messagesList');
+            if (messagesList) {
+                messagesList.innerHTML = renderMessages(currentUsername);
+            }
+        }
+    } catch (error) {
+        console.error('Error refreshing messages:', error);
+    }
+}
+
 // Send message function
-function sendMessage(event) {
+async function sendMessage(event) {
     event.preventDefault();
     
     const messageInput = document.getElementById('messageInput');
@@ -266,33 +304,54 @@ function sendMessage(event) {
     const currentUsername = currentUser === users.boyfriend ? 'boyfriend' : 'girlfriend';
     const senderName = currentUser.name;
     
-    const newMessage = {
-        id: Date.now(),
+    const messageData = {
         sender: currentUsername,
         senderName: senderName,
         content: messageText,
-        gesture: selectedGesture,
-        timestamp: new Date().toISOString(),
-        dateFormatted: new Date().toLocaleString()
+        gesture: selectedGesture
     };
     
-    messages.unshift(newMessage); // Add to beginning of array (newest first)
-    localStorage.setItem('coupleMessages', JSON.stringify(messages));
-    
-    // Clear input and reset gesture
-    messageInput.value = '';
-    selectedGesture = null;
-    document.querySelectorAll('.gesture-btn').forEach(btn => btn.classList.remove('active'));
-    document.getElementById('normalBtn').classList.add('active');
-    
-    // Re-render messages
-    const messagesList = document.getElementById('messagesList');
-    if (messagesList) {
-        messagesList.innerHTML = renderMessages(currentUsername);
+    try {
+        // Send message to server
+        const response = await fetch('/api/messages', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(messageData)
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            // Clear input and reset gesture
+            messageInput.value = '';
+            selectedGesture = null;
+            document.querySelectorAll('.gesture-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('normalBtn').classList.add('active');
+            
+            // Refresh messages from server
+            const messagesResponse = await fetch('/api/messages');
+            const messagesData = await messagesResponse.json();
+            if (messagesData.success) {
+                messages = messagesData.messages;
+                
+                // Re-render messages
+                const messagesList = document.getElementById('messagesList');
+                if (messagesList) {
+                    messagesList.innerHTML = renderMessages(currentUsername);
+                }
+                
+                // Scroll to top to see the new message
+                messagesList.scrollIntoView({ behavior: 'smooth' });
+            }
+        } else {
+            alert('Failed to send message. Please try again.');
+        }
+    } catch (error) {
+        console.error('Error sending message:', error);
+        alert('Failed to send message. Please check your connection.');
     }
-    
-    // Scroll to top to see the new message
-    messagesList.scrollIntoView({ behavior: 'smooth' });
 }
 
 // Render messages function
