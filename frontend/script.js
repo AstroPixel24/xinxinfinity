@@ -70,27 +70,11 @@ let welcomeUser, userAvatar, personalizedTitle, personalizedMessage, logoutBtn, 
 
 // Event Listeners
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize DOM elements
-    loginPage = document.getElementById('loginPage');
-    dashboardPage = document.getElementById('dashboardPage');
-    loginForm = document.getElementById('loginForm');
-    usernameInput = document.getElementById('username');
-    passwordInput = document.getElementById('password');
-    welcomeUser = document.getElementById('welcomeUser');
-    userAvatar = document.getElementById('userAvatar');
-    personalizedTitle = document.getElementById('personalizedTitle');
-    personalizedMessage = document.getElementById('personalizedMessage');
-    logoutBtn = document.getElementById('logoutBtn');
-    contentSection = document.getElementById('contentSection');
-    
-    // Add event listeners
-    if (loginForm) loginForm.addEventListener('submit', handleLogin);
-    if (logoutBtn) logoutBtn.addEventListener('click', handleLogout);
-    
-    // Initialize gesture selection to normal message
-    selectedGesture = null;
-    
-    console.log('National Girlfriend Day website loaded with love!');
+    // Set romantic title and message
+    const title = document.getElementById('personalizedTitle');
+    const message = document.getElementById('personalizedMessage');
+    if (title) title.textContent = 'Happy National Girlfriend Day!';
+    if (message) message.textContent = "Here are 7 letters for each day we're apart. I'll fill them in soon. I love you!";
 });
 
 // Login function
