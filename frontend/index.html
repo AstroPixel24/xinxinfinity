@@ -23,38 +23,29 @@
                     <h1 id="personalizedTitle">Happy National Girlfriend Day!</h1>
                     <p id="personalizedMessage">Here are 7 letters for each day we're apart. I'll fill them in soon. I love you!</p>
                 </div>
-                <div class="letters-section">
-                    <h2>Letters for You</h2>
-                    <div class="letters-list">
-                        <div class="letter-card" id="letter1">
-                            <h3>Day 1</h3>
-                            <div class="letter-content"></div>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-comments"></i>
                         </div>
-                        <div class="letter-card" id="letter2">
-                            <h3>Day 2</h3>
-                            <div class="letter-content"></div>
-                        </div>
-                        <div class="letter-card" id="letter3">
-                            <h3>Day 3</h3>
-                            <div class="letter-content"></div>
-                        </div>
-                        <div class="letter-card" id="letter4">
-                            <h3>Day 4</h3>
-                            <div class="letter-content"></div>
-                        </div>
-                        <div class="letter-card" id="letter5">
-                            <h3>Day 5</h3>
-                            <div class="letter-content"></div>
-                        </div>
-                        <div class="letter-card" id="letter6">
-                            <h3>Day 6</h3>
-                            <div class="letter-content"></div>
-                        </div>
-                        <div class="letter-card" id="letter7">
-                            <h3>Day 7</h3>
-                            <div class="letter-content"></div>
-                        </div>
+                        <h3>Messages</h3>
+                        <p>Send sweet messages to each other</p>
+                        <button class="feature-btn" onclick="showMessages()">Open Messages</button>
                     </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-envelope-heart"></i>
+                        </div>
+                        <h3>7 Day Letters</h3>
+                        <p>Love letters for each day we're apart</p>
+                        <button class="feature-btn" onclick="showLetters()">View Letters</button>
+                    </div>
+                </div>
+
+                <!-- Content Sections -->
+                <div id="contentSection" class="content-section hidden">
+                    <!-- Dynamic content will be loaded here -->
                 </div>
             </main>
         </div>
