@@ -263,19 +263,19 @@ async function showMessages() {
                 <form class="message-form" onsubmit="sendMessage(event)">
                     <div class="gesture-buttons">
                         <button type="button" class="gesture-btn" onclick="selectGesture('kiss')" id="kissBtn">
-                            💋 Virtual Kiss
+                            💋 virtual kiss
                         </button>
                         <button type="button" class="gesture-btn" onclick="selectGesture('hug')" id="hugBtn">
-                            🤗 Virtual Hug
+                            🤗 virtual hug
                         </button>
                         <button type="button" class="gesture-btn" onclick="selectGesture(null)" id="normalBtn">
-                            💬 Just Message
+                            💬 only message
                         </button>
                     </div>
                     <textarea 
                         class="message-input" 
                         id="messageInput" 
-                        placeholder="Write something sweet..."
+                        placeholder="write hereeeeeeee"
                         required
                     ></textarea>
                     <button type="submit" class="send-message-btn">
@@ -402,7 +402,7 @@ async function sendMessage(event) {
 // Render messages function
 function renderMessages() {
     if (messages.length === 0) {
-        return '<div class="no-messages">No messages yet. Be the first to send a sweet message!</div>';
+        return '<div class="no-messages">No messages yet. </div>';
     }
     
     return messages.map(message => {
@@ -446,9 +446,9 @@ async function loadMessages() {
 function showLetters() {
     const content = `
         <div class="letters-section">
-            <h2>7 Letters for You</h2>
+            <h2>7 letters for my xin xin</h2>
             <p style="text-align: center; color: #7f8c8d; margin-bottom: 2rem;">
-                One letter for each day we're apart. I'll fill them with love soon.
+                one letter for each day that we're apart
             </p>
             <div class="letters-list">
                 <div class="letter-card" id="letter1">
